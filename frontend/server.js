@@ -53,7 +53,7 @@ let tailErrOffset = 0;
 
 // ─── Default config ───────────────────────────────────────────────────────────
 const DEFAULT_CONFIG = {
-  binaryPath:    '../keyhunt',
+  binaryPath:    '../bitmine',
   workDir:       '..',
   mode:          'address',
   file:          'tests/66.txt',

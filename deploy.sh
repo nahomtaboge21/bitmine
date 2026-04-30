@@ -57,19 +57,19 @@ else
   ok "Node.js $(node --version) installed"
 fi
 
-# ── Step 3: Compile keyhunt ───────────────────────────────────────────────────
-echo -e "\n${CYAN}[3/6] Compile keyhunt${NC}"
+# ── Step 3: Compile bitmine ──────────────────────────────────────────────────
+echo -e "\n${CYAN}[3/6] Compile bitmine${NC}"
 cd "$INSTALL_DIR"
 
-if [[ -f keyhunt ]]; then
+if [[ -f bitmine ]]; then
   warn "Binary already exists — recompiling for this CPU..."
   make clean 2>/dev/null || true
 fi
 
 info "Compiling (this takes ~30 seconds)..."
 make 2>&1 | tail -3
-[[ -f keyhunt ]] || die "Compilation failed — binary not found"
-ok "keyhunt compiled: $(./keyhunt 2>&1 | head -1 || true)"
+[[ -f bitmine ]] || die "Compilation failed — binary not found"
+ok "bitmine compiled: $(./bitmine 2>&1 | head -1 || true)"
 
 # ── Step 4: Frontend dependencies ─────────────────────────────────────────────
 echo -e "\n${CYAN}[4/6] Frontend dependencies${NC}"
@@ -129,6 +129,6 @@ echo -e "  PM2 logs:    ${YELLOW}pm2 logs bitmine-ui${NC}"
 echo -e "  Update:      ${YELLOW}git pull && bash deploy.sh${NC}"
 echo -e ""
 echo -e "  In the dashboard set:"
-echo -e "  Binary Path  →  ${INSTALL_DIR}/keyhunt"
+echo -e "  Binary Path  →  ${INSTALL_DIR}/bitmine"
 echo -e "  Work Dir     →  ${INSTALL_DIR}"
 echo -e ""

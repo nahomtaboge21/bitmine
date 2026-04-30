@@ -7,7 +7,7 @@
 module.exports = {
   apps: [
     {
-      name:             'bitmine-ui',
+      name:             'bitpuzzle-ui',
       script:           'server.js',
       cwd:              __dirname,
       instances:        1,

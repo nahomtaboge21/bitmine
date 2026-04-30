@@ -1,4 +1,4 @@
-# BitMine
+# BitPuzzle
 
 High-performance Bitcoin & Ethereum private key hunting tool for secp256k1 elliptic curve puzzles — now with a real-time **Web UI dashboard**.
 
@@ -16,7 +16,7 @@ Works for Ethereum:
 
 ## 🖥 Web UI Dashboard
 
-BitMine ships with a browser-based dashboard to start, monitor, and manage hunts from any device.
+BitPuzzle ships with a browser-based dashboard to start, monitor, and manage hunts from any device.
 
 **Features:**
 - Live console output with color-coded log lines
@@ -37,8 +37,8 @@ node server.js
 ### Deploy to a server (one command)
 
 ```bash
-git clone https://github.com/nahomtaboge21/keyhunt.updated.git /opt/bitmine
-cd /opt/bitmine && bash deploy.sh
+git clone https://github.com/nahomtaboge21/keyhunt.updated.git /opt/bitpuzzle
+cd /opt/bitpuzzle && bash deploy.sh
 ```
 
 See [deploy.sh](deploy.sh) for full details.
@@ -51,7 +51,7 @@ Build and run against puzzle 66 (address mode):
 
 ```bash
 make
-./bitmine -m address -f tests/66.txt -b 66 -l compress -R -q -s 10
+./bitpuzzle -m address -f tests/66.txt -b 66 -l compress -R -q -s 10
 ```
 
 Add `-t numberThreads` for better speed.
@@ -59,7 +59,7 @@ Add `-t numberThreads` for better speed.
 Run against Puzzle 125 (bsgs mode):
 
 ```bash
-./bitmine -m bsgs -f tests/125.txt -b 125 -q -s 10 -R
+./bitpuzzle -m bsgs -f tests/125.txt -b 125 -q -s 10 -R
 ```
 
 Add `-t numberThreads` and `-k factor` for better speed.
@@ -133,7 +133,7 @@ make legacy
 Show help:
 
 ```bash
-./bitmine -h
+./bitpuzzle -h
 ```
 
 ## ¡Beta!
@@ -145,7 +145,7 @@ This version could also have some bugs — please report them.
 
 # Modes
 
-BitMine can work in different ways at different speeds.
+BitPuzzle can work in different ways at different speeds.
 
 Current available modes:
 - address
@@ -171,7 +171,7 @@ Example file `tests/1to32.txt`:
 ```
 
 ```bash
-./bitmine -m address -f tests/1to32.txt -r 1:FFFFFFFF
+./bitpuzzle -m address -f tests/1to32.txt -r 1:FFFFFFFF
 ```
 
 Output:
@@ -188,25 +188,25 @@ rmd160 751e76e8199196d454941c45d1b3a323f1433bd6
 Test your luck against puzzle #66:
 
 ```bash
-./bitmine -m address -f tests/66.txt -b 66 -l compress -R -q -s 10
+./bitpuzzle -m address -f tests/66.txt -b 66 -l compress -R -q -s 10
 ```
 
 ### Vanity search
 
 ```bash
-./bitmine -m vanity -l compress -R -b 256 -v 1Good1 -v 1MyKey
+./bitpuzzle -m vanity -l compress -R -b 256 -v 1Good1 -v 1MyKey
 ```
 
 ## rmd160 mode
 
 ```bash
-./bitmine -m rmd160 -f tests/1to32.rmd -r 1:FFFFFFFF -l compress -s 5
+./bitpuzzle -m rmd160 -f tests/1to32.rmd -r 1:FFFFFFFF -l compress -s 5
 ```
 
 Test puzzle #66:
 
 ```bash
-./bitmine -m rmd160 -f tests/66.rmd -b 66 -l compress -R -q
+./bitpuzzle -m rmd160 -f tests/66.rmd -b 66 -l compress -R -q
 ```
 
 ## xpoint mode
@@ -214,8 +214,8 @@ Test puzzle #66:
 Targets the X value of the public key. Faster than address/rmd160.
 
 ```bash
-./bitmine -m xpoint -f tests/substracted40.txt -n 65536 -t 4 -b 40
-./bitmine -m xpoint -f tests/120.txt -t 4 -b 125 -R -q
+./bitpuzzle -m xpoint -f tests/substracted40.txt -n 65536 -t 4 -b 40
+./bitpuzzle -m xpoint -f tests/120.txt -t 4 -b 125 -R -q
 ```
 
 ## Endomorphism
@@ -227,13 +227,13 @@ Enable with `-e` — checks 6 keys per computation for modes `address`, `rmd160`
 BSGS searches a known public key range. The input file needs a list of public keys (compressed or uncompressed).
 
 ```bash
-./bitmine -m bsgs -f tests/125.txt -b 125 -q -s 10 -R
+./bitpuzzle -m bsgs -f tests/125.txt -b 125 -q -s 10 -R
 ```
 
 With high K-factor (more RAM = more speed):
 
 ```bash
-./bitmine -m bsgs -f tests/125.txt -b 125 -R -k 512 -q -t 8 -s 10 -S
+./bitpuzzle -m bsgs -f tests/125.txt -b 125 -R -k 512 -q -t 8 -s 10 -S
 ```
 
 ### RAM vs K-factor guide
@@ -272,14 +272,14 @@ With high K-factor (more RAM = more speed):
 ## minikeys mode
 
 ```bash
-./bitmine -m minikeys -f tests/minikeys.txt -C SG64GZqySYwBm9KxE1wJ28 -n 0x10000
-./bitmine -m minikeys -f tests/minikeys.txt -n 0x10000 -q -R
+./bitpuzzle -m minikeys -f tests/minikeys.txt -C SG64GZqySYwBm9KxE1wJ28 -n 0x10000
+./bitpuzzle -m minikeys -f tests/minikeys.txt -n 0x10000 -q -R
 ```
 
 ## Ethereum
 
 ```bash
-./bitmine -c eth -f tests/1to32.eth -r 1:100000000 -M
+./bitpuzzle -c eth -f tests/1to32.eth -r 1:100000000 -M
 ```
 
 ---

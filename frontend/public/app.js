@@ -1,5 +1,5 @@
 /**
- * BitMine Web UI — Frontend Application
+ * BitPuzzle Web UI — Frontend Application
  */
 
 /* ── State ─────────────────────────────────────────────────────────────── */
@@ -306,7 +306,7 @@ function handleMessage({ type, data, ts }) {
         data.logs.forEach(l => appendLog(l.line, l.stream, l.ts));
       }
       const bgNote = data.running ? `Running (PID ${data.pid}) · background process survives browser close` : 'Idle';
-      elFootInfo.textContent = `BitMine Web UI · ${bgNote}`;
+      elFootInfo.textContent = `BitPuzzle Web UI · ${bgNote}`;
       break;
     }
 
@@ -314,11 +314,11 @@ function handleMessage({ type, data, ts }) {
       setRunning(data.running, data.pid);
       if (data.running) {
         startUptimeTick(0);
-        elFootInfo.textContent = `BitMine Web UI · Running (PID ${data.pid}) · background process survives browser close`;
+        elFootInfo.textContent = `BitPuzzle Web UI · Running (PID ${data.pid}) · background process survives browser close`;
       } else {
         stopUptimeTick();
         elSpeed.textContent = '— keys/s';
-        elFootInfo.textContent = 'BitMine Web UI · Idle';
+        elFootInfo.textContent = 'BitPuzzle Web UI · Idle';
       }
       if (data.config) populateForm(data.config);
       break;
@@ -425,7 +425,7 @@ $('btn-export').addEventListener('click', () => {
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href     = url;
-  a.download = `bitmine_found_${Date.now()}.json`;
+  a.download = `bitpuzzle_found_${Date.now()}.json`;
   a.click();
   URL.revokeObjectURL(url);
 });

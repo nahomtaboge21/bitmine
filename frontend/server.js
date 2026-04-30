@@ -1,10 +1,10 @@
 /**
- * BitMine Web UI - Backend Server
+ * BitPuzzle Web UI - Backend Server
  *
  * keyhunt runs as a DETACHED background process:
  *   - survives browser tab close
  *   - survives this Node server restarting
- *   - stdout/stderr are written to logs/bitmine.out / logs/bitmine.err
+ *   - stdout/stderr are written to logs/bitpuzzle.out / logs/bitpuzzle.err
  *   - PID + config saved to runstate.json so the server can re-attach on restart
  */
 
@@ -27,8 +27,8 @@ const CONFIG_FILE = path.join(__dirname, 'config.json');
 const FOUND_FILE  = path.join(__dirname, 'found_keys.json');
 const STATE_FILE  = path.join(__dirname, 'runstate.json');
 const LOG_DIR     = path.join(__dirname, 'logs');
-const STDOUT_LOG  = path.join(LOG_DIR, 'bitmine.out');
-const STDERR_LOG  = path.join(LOG_DIR, 'bitmine.err');
+const STDOUT_LOG  = path.join(LOG_DIR, 'bitpuzzle.out');
+const STDERR_LOG  = path.join(LOG_DIR, 'bitpuzzle.err');
 
 fs.mkdirSync(LOG_DIR, { recursive: true });
 
@@ -53,7 +53,7 @@ let tailErrOffset = 0;
 
 // ─── Default config ───────────────────────────────────────────────────────────
 const DEFAULT_CONFIG = {
-  binaryPath:    '../bitmine',
+  binaryPath:    '../bitpuzzle',
   workDir:       '..',
   mode:          'address',
   file:          'tests/66.txt',
@@ -475,5 +475,5 @@ tryReattach();
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () =>
-  console.log(`\n  BitMine Web UI →  http://localhost:${PORT}\n  Logs: ${LOG_DIR}\n`)
+  console.log(`\n  BitPuzzle Web UI →  http://localhost:${PORT}\n  Logs: ${LOG_DIR}\n`)
 );

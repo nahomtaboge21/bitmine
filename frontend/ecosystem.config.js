@@ -7,7 +7,7 @@
 module.exports = {
   apps: [
     {
-      name:             'keyhunt-ui',
+      name:             'bitmine-ui',
       script:           'server.js',
       cwd:              __dirname,
       instances:        1,

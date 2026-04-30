@@ -1,7 +1,7 @@
 {
-  "name": "keyhunt-web",
+  "name": "bitmine-web",
   "version": "1.0.0",
-  "description": "Web UI for KeyHunt - real-time Bitcoin key hunting dashboard",
+  "description": "Web UI for BitMine - real-time Bitcoin key hunting dashboard",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

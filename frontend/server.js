@@ -1,10 +1,10 @@
 /**
- * KeyHunt Web UI - Backend Server
+ * BitMine Web UI - Backend Server
  *
  * keyhunt runs as a DETACHED background process:
  *   - survives browser tab close
  *   - survives this Node server restarting
- *   - stdout/stderr are written to logs/keyhunt.out / logs/keyhunt.err
+ *   - stdout/stderr are written to logs/bitmine.out / logs/bitmine.err
  *   - PID + config saved to runstate.json so the server can re-attach on restart
  */
 
@@ -27,8 +27,8 @@ const CONFIG_FILE = path.join(__dirname, 'config.json');
 const FOUND_FILE  = path.join(__dirname, 'found_keys.json');
 const STATE_FILE  = path.join(__dirname, 'runstate.json');
 const LOG_DIR     = path.join(__dirname, 'logs');
-const STDOUT_LOG  = path.join(LOG_DIR, 'keyhunt.out');
-const STDERR_LOG  = path.join(LOG_DIR, 'keyhunt.err');
+const STDOUT_LOG  = path.join(LOG_DIR, 'bitmine.out');
+const STDERR_LOG  = path.join(LOG_DIR, 'bitmine.err');
 
 fs.mkdirSync(LOG_DIR, { recursive: true });
 
@@ -475,5 +475,5 @@ tryReattach();
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () =>
-  console.log(`\n  KeyHunt Web UI →  http://localhost:${PORT}\n  Logs: ${LOG_DIR}\n`)
+  console.log(`\n  BitMine Web UI →  http://localhost:${PORT}\n  Logs: ${LOG_DIR}\n`)
 );

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ════════════════════════════════════════════════════════════════════════════════
-#  KeyHunt Web UI — Deployment Script
+#  BitMine Web UI — Deployment Script
 #  Supports: Ubuntu 20.04+ / Debian 11+
 #
 #  Usage (first time):
@@ -20,7 +20,7 @@ warn() { echo -e "${YELLOW}[!]${NC} $*"; }
 die()  { echo -e "${RED}[✗]${NC} $*"; exit 1; }
 
 echo -e "\n${GREEN}╔══════════════════════════════════════╗"
-echo -e "║   KeyHunt Web UI — Deploy Script     ║"
+echo -e "║   BitMine Web UI — Deploy Script     ║"
 echo -e "╚══════════════════════════════════════╝${NC}\n"
 
 # ── Must run as root ──────────────────────────────────────────────────────────
@@ -89,8 +89,8 @@ else
 fi
 
 # Stop old instance if running
-pm2 stop  keyhunt-ui 2>/dev/null && info "Stopped old instance" || true
-pm2 delete keyhunt-ui 2>/dev/null || true
+pm2 stop  bitmine-ui 2>/dev/null && info "Stopped old instance" || true
+pm2 delete bitmine-ui 2>/dev/null || true
 
 # Start fresh
 pm2 start ecosystem.config.js
@@ -109,7 +109,7 @@ echo -e "\n${CYAN}[6/6] Firewall (ufw)${NC}"
 
 if command -v ufw &>/dev/null; then
   ufw allow 22/tcp   comment 'SSH'   >/dev/null 2>&1 || true
-  ufw allow 3000/tcp comment 'KeyHunt UI' >/dev/null 2>&1 || true
+  ufw allow 3000/tcp comment 'BitMine UI' >/dev/null 2>&1 || true
   ufw --force enable >/dev/null 2>&1 || true
   ok "Firewall: ports 22 and 3000 open"
 else
@@ -125,7 +125,7 @@ echo -e "${GREEN}═════════════════════
 echo -e ""
 echo -e "  Dashboard →  ${CYAN}http://${SERVER_IP}:3000${NC}"
 echo -e "  PM2 status:  ${YELLOW}pm2 status${NC}"
-echo -e "  PM2 logs:    ${YELLOW}pm2 logs keyhunt-ui${NC}"
+echo -e "  PM2 logs:    ${YELLOW}pm2 logs bitmine-ui${NC}"
 echo -e "  Update:      ${YELLOW}git pull && bash deploy.sh${NC}"
 echo -e ""
 echo -e "  In the dashboard set:"

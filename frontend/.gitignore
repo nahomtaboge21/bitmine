@@ -1,0 +1,11 @@
+# ── Node dependencies ─────────────────────────────────────────────────────────
+node_modules/
+
+# ── Runtime state (generated on server, not committed) ───────────────────────
+config.json
+found_keys.json
+runstate.json
+logs/
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store

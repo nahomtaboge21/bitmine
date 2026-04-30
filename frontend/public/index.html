@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KeyHunt Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- ══════════════════ HEADER ══════════════════ -->
+  <header>
+    <div class="header-left">
+      <span class="logo">⬡ KEYHUNT</span>
+      <span class="subtitle">Bitcoin Puzzle Solver · Dashboard</span>
+    </div>
+    <div class="header-center">
+      <div id="status-badge" class="badge badge-idle">IDLE</div>
+    </div>
+    <div class="header-right">
+      <span id="pid-label" class="pid-label" style="display:none">PID <span id="pid-value">—</span></span>
+      <span class="footer-sep" id="pid-sep" style="display:none">|</span>
+      <span id="clock" class="clock"></span>
+    </div>
+  </header>
+
+  <!-- ══════════════════ STATS ROW ══════════════════ -->
+  <section class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">SPEED</div>
+      <div class="stat-value" id="stat-speed">— keys/s</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">TOTAL KEYS</div>
+      <div class="stat-value" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">UPTIME</div>
+      <div class="stat-value" id="stat-uptime">00:00:00</div>
+    </div>
+    <div class="stat-card highlight">
+      <div class="stat-label">KEYS FOUND</div>
+      <div class="stat-value gold" id="stat-found">0</div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ MAIN GRID ══════════════════ -->
+  <main class="main-grid">
+
+    <!-- ── LEFT: Config panel ──────────────────────────────────────── -->
+    <aside class="panel config-panel">
+      <div class="panel-title">
+        <span>⚙ CONFIGURATION</span>
+        <button id="btn-reset-cfg" class="btn btn-ghost btn-xs" title="Reset to defaults">↺ Reset</button>
+      </div>
+
+      <form id="config-form" autocomplete="off">
+
+        <div class="form-group">
+          <label>Binary Path</label>
+          <input type="text" name="binaryPath" placeholder="../keyhunt" />
+          <small>Relative to server.js or absolute</small>
+        </div>
+
+        <div class="form-group">
+          <label>Work Directory</label>
+          <input type="text" name="workDir" placeholder=".." />
+          <small>Where keyhunt looks for test files</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Mode</label>
+            <select name="mode">
+              <option value="address">address</option>
+              <option value="rmd160">rmd160</option>
+              <option value="xpoint">xpoint</option>
+              <option value="bsgs">bsgs</option>
+              <option value="vanity">vanity</option>
+              <option value="minikeys">minikeys</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Threads</label>
+            <input type="number" name="threads" min="1" max="256" placeholder="4" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Input File</label>
+          <input type="text" name="file" placeholder="tests/66.txt" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bit Range (-b)</label>
+            <input type="number" name="bits" min="1" max="256" placeholder="66" />
+          </div>
+          <div class="form-group">
+            <label>Stats Interval (s)</label>
+            <input type="number" name="statsInterval" min="1" placeholder="10" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Hex Range (-r) <small class="muted">START:END</small></label>
+          <input type="text" name="range" placeholder="e.g. 20000000000000000:3ffffffffffffffff" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Compress (-l)</label>
+            <select name="compress">
+              <option value="compress">compress</option>
+              <option value="uncompress">uncompress</option>
+              <option value="both">both</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>K-Factor (-k) <small class="muted">BSGS</small></label>
+            <input type="number" name="kFactor" min="1" placeholder="512" />
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label class="checkbox-label">
+            <input type="checkbox" name="random" /> <span>Random (-R)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="quiet" /> <span>Quiet (-q)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="endomorphism" /> <span>Endomorphism (-e)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="saveFiles" /> <span>Save Files (-S)</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Extra Args</label>
+          <input type="text" name="extraArgs" placeholder="e.g. -I 2 -z 3" />
+        </div>
+
+        <div class="btn-group">
+          <button id="btn-start" type="submit" class="btn btn-start">▶ START</button>
+          <button id="btn-stop" type="button" class="btn btn-stop" disabled>■ STOP</button>
+        </div>
+
+      </form>
+    </aside>
+
+    <!-- ── CENTER: Console + Chart ────────────────────────────────── -->
+    <section class="panel console-panel">
+      <div class="panel-title">
+        <span>⬛ LIVE OUTPUT</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <label class="checkbox-label xs">
+            <input type="checkbox" id="chk-autoscroll" checked /> <span>Auto-scroll</span>
+          </label>
+          <button id="btn-clear-log" class="btn btn-ghost btn-xs">✕ Clear</button>
+        </div>
+      </div>
+      <div id="console" class="console"></div>
+
+      <div class="panel-title" style="margin-top:12px">
+        <span>📈 SPEED HISTORY</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="speed-chart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════ FOUND KEYS ══════════════════ -->
+  <section class="panel found-panel">
+    <div class="panel-title">
+      <span>🔑 FOUND KEYS</span>
+      <div style="display:flex;gap:8px">
+        <button id="btn-export" class="btn btn-ghost btn-xs">⬇ Export JSON</button>
+        <button id="btn-clear-found" class="btn btn-ghost btn-xs danger">✕ Clear</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="found-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Private Key</th>
+            <th>Address</th>
+            <th>RMD160</th>
+            <th>Found At</th>
+          </tr>
+        </thead>
+        <tbody id="found-tbody">
+          <tr class="empty-row"><td colspan="5">No keys found yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════ WS STATUS BAR ══════════════════ -->
+  <footer>
+    <span id="ws-status" class="ws-dot ws-connecting"></span>
+    <span id="ws-label">Connecting…</span>
+    <span class="footer-sep">|</span>
+    <span id="footer-info">KeyHunt Web UI</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

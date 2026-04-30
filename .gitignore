@@ -1,0 +1,25 @@
+# ── Compiled binaries ─────────────────────────────────────────────────────────
+keyhunt
+keyhunt.exe
+bsgsd
+bsgsd.exe
+keyhunt_legacy
+
+# ── Object files ──────────────────────────────────────────────────────────────
+*.o
+
+# ── keyhunt runtime output ────────────────────────────────────────────────────
+KEYFOUNDKEYFOUND.txt
+VANITYKEYFOUND.txt
+
+# ── keyhunt cache / saved data files ─────────────────────────────────────────
+*.blm
+*.tbl
+*.dat
+data_*.dat
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
